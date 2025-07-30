@@ -213,49 +213,6 @@ ACC.PRU<-lapply(redes, prop)
 ACC.PRU[[2]][1]
 
 
-# Convertir la red ajustada a grain (modelo probabilístico)
-gr.RB10 <- as.grain(RB.b1w4$fitted)
-
-# Definir conjuntos train/test (como en tu código)
-Diab.train <- as.integer(as.character(D.train$Diabetes))
-Diab.test <- as.integer(as.character(D.test$Diabetes))
-
-# Función para obtener predicciones
-prop <- function(red) {
-  propagacion <- red
-  pred.train <- predict(propagacion, response = "Diabetes",
-                        newdata = D.train, predictors = names(D)[-9],
-                        type = "distribution")
-  pred.test <- predict(propagacion, response = "Diabetes",
-                       newdata = D.test, predictors = names(D)[-9],
-                       type = "distribution")
-  list(pred.train$pred$Diabetes, pred.test$pred$Diabetes)
-}
-
-ACC.PRU <- prop(gr.RB10)
-
-# Probabilidades para train
-his.train <- ACC.PRU[[1]][,2]
-
-# Separar por clases
-ceros.train <- his.train[which(Diab.train == 0)]
-unos.train <- his.train[which(Diab.train == 1)]
-
-# Densidades
-dc.train <- density(ceros.train, from = 0, to = 1)
-du.train <- density(unos.train, from = 0, to = 1)
-
-# Graficar distribuciones
-plot(dc.train, xlim = c(0, 1), ylim = c(0, 2.5),
-     main = "Distribución de probabilidades (Train)",
-     xlab = "p(Diabetes = 1)", ylab = "Densidad", col = "darkblue")
-par(new = TRUE)
-plot(du.train, xlim = c(0, 1), ylim = c(0, 2.5),
-     main = "", xlab = "", ylab = "", col = "red")
-abline(v = 0.3, col = "green", lwd = 2)
-legend("topright", legend = c("Diabetes = 0", "Diabetes = 1"),
-       col = c("darkblue", "red"), lwd = 2)
-
 ```
 
 <html lang="es">
