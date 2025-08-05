@@ -12,12 +12,9 @@ knitr::opts_chunk$set(echo = TRUE)
 ```{r redes, message=FALSE, warning=FALSE}
 #CARGA DE LIBRERIAS
 library(corrplot)
-library(sqldf)
 library(bnlearn)
 library(visNetwork)
 library(RCurl)
-library(BiocManager)
-library(caret)
 library(gRbase)
 library(gRain)
 
@@ -43,12 +40,12 @@ names(datos)<-c("Embarazo",
 attach(datos)
 
 #Análisis exploratorio
-summary(datos[,1])
-sort(unique(datos[,1]))
+#summary(datos[,1])
+#sort(unique(datos[,1]))
 #hist(datos[,1])
 
-summary(datos[,2])
-sort(unique(datos[,2]))
+#summary(datos[,2])
+#sort(unique(datos[,2]))
 
 #NA'S
 datos.limp<-datos
@@ -211,6 +208,7 @@ ACC.PRU<-lapply(redes, prop)
 
 #Probabilidades 
 ACC.PRU[[2]][1]
+
 
 
 ```
